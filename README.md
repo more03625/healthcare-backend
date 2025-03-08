@@ -1,42 +1,43 @@
-# 🚀 Web Task Pro: The Ultimate solution to get rid of repetitive tasks.  
-    🎯 This microservice will be helpful for you to `eliminate repetitive tasks` such as 
-        1. Adding SEO to webpages
-        2. Adding Banners to website
-        3. Adding common pages such as 
-            1. About us
-            2. Privacy Policy 
-            3. Other such pages where Title & Description is there.
-    
-    🏡 Multi language support.
+# Healthcare CRM Backend
 
-# 🛠️ Local development
+This is the backend for a **SaaS-based Healthcare CRM**, designed to streamline hospital management by integrating patient records, staff management, and appointment scheduling.
 
-##  Prerequisites
+## 🚀 Features
+- Multi-hospital support
+- Role-based access (Doctors, Nurses, Admins, etc.)
+- Secure authentication & authorization (JWT)
+- Patient & appointment management
+- PostgreSQL database integration
 
-You can follow these instructions to setup a dev environment:
+## 🛠️ Tech Stack
+- **Node.js** (Fastify)
+- **TypeScript**
+- **PostgreSQL** (pg)
+- **JWT Authentication**
+- **Docker** (for deployment)
 
-- Install **Node 18.18.0 (LTS)**
-- Install **npm**: https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
-- Clone this repo: `git clone https://github.com/more03625/web-task-pro.git`
-- Run `npm install` to install dependencies
+## 📦 Setup
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/more03625/healthcare-backend.git
+   cd healthcare-backend
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Set up the `.env` file:
+   ```sh
+   cp .env.example .env
+   ```
+4. Start the server:
+   ```sh
+   npm run dev
+   ```
 
-**Installing Required Packages:**
+## 📄 API Documentation
+- API endpoints will be documented soon.
 
-```bash
-npm install # install all packages
-```
+## 🤝 Contributing
+Pull requests are welcome! 🚀
 
-**Create .env files**
-
-```bash
-npm run create-env
-```
-#### Note: Set env variables 
-
-**Running webSocketPro**
-
-```bash
-npm run dev # Refer package.json for more envs
-```
-
-After running above command, you can access the server at http://localhost:8080

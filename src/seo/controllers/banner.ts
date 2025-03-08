@@ -1,6 +1,6 @@
 import { Request } from 'express';
-import { pageModel } from "../models";
-import { response } from '../utils';
+import { bannerModel } from "../models";
+import { response } from '../../utils';
 import { t } from '../constants';
 
 const get = async (req: Request) => {
@@ -15,6 +15,10 @@ const get = async (req: Request) => {
             query.pageUrl = req.query.pageUrl.toString();
         }
 
+        if (req.query.position) {
+            query.position = req.query.position.toString();
+        }
+
         if (req.query.isActive) {
             query.isActive = req.query.isActive.toString();
         }
@@ -25,8 +29,8 @@ const get = async (req: Request) => {
         const skip = (page - 1) * perPage;
         const limit = perPage;
 
-        const count = await pageModel.countDocuments(query);
-        const result = await pageModel.find(query).skip(skip).limit(limit);
+        const count = await bannerModel.countDocuments(query);
+        const result = await bannerModel.find(query).skip(skip).limit(limit);
         return { count, result }
     } catch (err) {
         return response.internalServerError(err);
@@ -35,12 +39,7 @@ const get = async (req: Request) => {
 
 const add = async (req: Request) => {
     try {
-        const isExists = await pageModel.findOne({ siteUrl: req.body.siteUrl, pageUrl: req.body.pageUrl });
-        if (isExists) {
-            return response.conflict(t('PAGE_ALREADY_EXIST', req.headers));
-        }
-
-        return await pageModel.create(req.body);
+        return await bannerModel.create(req.body);
     } catch (err) {
         return response.internalServerError(err);
     }
@@ -49,11 +48,11 @@ const add = async (req: Request) => {
 const update = async (req: Request) => {
     try {
         const where = { _id: req.body.id }
-        const isExists = await pageModel.findOne(where);
+        const isExists = await bannerModel.findOne(where);
         if (isExists) {
-            return await pageModel.updateOne(where, req.body);
+            return await bannerModel.updateOne(where, req.body);
         }
-        return response.notFound(t('PAGE_NOT_FOUND', req.headers));
+        return response.notFound(t('BANNER_NOT_FOUND', req.headers));
     } catch (err) {
         return response.internalServerError(err);
     }
@@ -65,15 +64,15 @@ const remove = async (req: Request) => {
             _id: req.body.id,
         }
 
-        const isExists = await pageModel.findOne(where);
+        const isExists = await bannerModel.findOne(where);
         if (isExists) {
-            const result = await pageModel.deleteOne(where, req.body);
+            const result = await bannerModel.deleteOne(where, req.body);
             if (result.acknowledged) {
-                return { message: t('PAGE_DELETE_SUCCESS', req.headers) }
+                return { message: t('BANNER_DELETE_SUCCESS', req.headers) }
             }
         }
 
-        return response.notFound(t('PAGE_NOT_FOUND', req.headers));
+        return response.notFound(t('BANNER_NOT_FOUND', req.headers));
     } catch (err) {
         return response.internalServerError(err);
     }

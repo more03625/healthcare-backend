@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { response, validate } from '../utils';
+import { response, validate } from '../../utils';
 import { bannerSchema } from '../schemas'; // Import the yup schema you created
 import { bannerController } from '../controllers';
 

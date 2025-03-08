@@ -1,16 +1,12 @@
 // Import required modules
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv'
-import path from 'path';
 import semver from 'semver';
-import mongoose from 'mongoose';
 import 'esm';
 
 import packageJson from '../package.json';
-import { connection } from './db';
-import { seoRouter, bannerRouter, pageRouter } from './routes';
-import { IDbConnectionOptions } from './interfaces';
+import { connectDB } from './seo/db';
+import { seoRouter, bannerRouter, pageRouter } from './seo/routes';
 import { errorMiddleware, middleware } from './utils';
 
 const app = express();
@@ -20,38 +16,27 @@ app.use(middleware);
 
 process.env.TZ = process.env.TIME_ZONE || "America/New_York"
 
-const result = dotenv.config({ path: path.resolve(__dirname, `../env/.env.${process.env.NODE_ENV}`).trim() });
-if (result.error) {
-    throw new Error(`Error loading .env file: ${result.error}`);
-}
 
 if (!semver.satisfies(process.version, `>=${packageJson.engines.node}`)) {
     console.error(`Required Node.js version is ${packageJson.engines.node}, but you are using ${process.version}.`);
     process.exit(1);
 }
 
-mongoose.set('debug', true);
-const connectToDB = async (options: IDbConnectionOptions) => {
+const connectToDB = async () => {
     try {
-        await connection(options);
+        await connectDB();
     } catch (error) {
         console.log('connectToDB error', error);
     }
 }
 
-const connectionOptions: IDbConnectionOptions = {
-    dbName: process.env.DB_DATABASE,
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-};
-
-connectToDB(connectionOptions);
+connectToDB();
 
 app.get('/', (req: Request, res: Response, next: NextFunction): void => {
     console.log(req.ip);
     res.send({
         success: true,
-        message: "Welcome to web-task-pro, helping you to eliminate common repetitive tasks!",
+        message: "Welcome to healthcare-backend, helping you to eliminate common repetitive tasks!",
     });
     return next()
 });
@@ -74,7 +59,7 @@ app.use('/api/pages', pageRouter);
 
 app.use(errorMiddleware);
 
-const port = process.env.APP_PORT || 8080;
+const port = process.env.APP_PORT || 8081;
 const NODE_ENV = process.env.NODE_ENV || 'dev';
 
 app.listen(port, () => {

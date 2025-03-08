@@ -1,7 +1,7 @@
 import { Request } from 'express';
 
 import { seoModel } from "../models";
-import { response } from "../utils";
+import { response } from "../../utils";
 import { t } from '../constants';
 // import { tWithDefaultLocale } from '../constants/messages/message';
 

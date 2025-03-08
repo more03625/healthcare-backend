@@ -2,7 +2,6 @@ import geoIp from "geoip-lite";
 import UAParser from 'ua-parser-js';
 
 import { NextFunction, Request, Response } from 'express';
-import { trackerController } from "../controllers";
 
 const trackUser = (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -27,7 +26,9 @@ const trackUser = (req: Request, res: Response, next: NextFunction) => {
             geoLocation: geoLocation || {},
         };
 
-        return trackerController.logUserInfo(data)
+        console.log('Track User Data =>', data);
+        
+        // return trackerController.logUserInfo(data)
     } catch (error) {
         return next();
     }

@@ -1,6 +1,6 @@
 import { ITracker } from "../interfaces";
 import { trackerModel } from "../models";
-import { response } from "../utils";
+import { response } from "../../utils";
 
 const logUserInfo = async (data: ITracker) => {
     try {

@@ -1,7 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { response } from '../utils';
+import { response, validate } from '../../utils';
 import { seoSchema } from '../schemas'; // Import the yup schema you created
-import { validate } from '../utils';
 import { seoController } from '../controllers';
 
 const server = express.Router();
