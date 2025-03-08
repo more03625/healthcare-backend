@@ -1,13 +1,13 @@
 import dotenv from "dotenv";
 import path from 'path';
 
-const result = dotenv.config({ path: path.resolve(__dirname, `../env/.env.${process.env.NODE_ENV}`).trim() });
+const result = dotenv.config({ path: path.resolve(__dirname, `../env/.env.${process.env.NODE_ENV || 'dev'}`).trim() });
 if (result.error) {
     throw new Error(`Error loading .env file: ${result.error}`);
 }
 
 const config = {
-    NODE_ENV: process.env.NODE_ENV || "example",
+    NODE_ENV: process.env.NODE_ENV || "dev",
     PORT: Number(process.env.PORT) || 8081,
 
     DEBUG: Boolean(Number(process.env.DEBUG)) || false,
