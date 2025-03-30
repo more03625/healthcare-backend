@@ -1,0 +1,1 @@
+export { default as HcTables } from './hc-tables';

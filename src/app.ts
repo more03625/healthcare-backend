@@ -7,6 +7,7 @@ import 'esm';
 import packageJson from '../package.json';
 import { connectDB } from './seo/db';
 import { seoRouter, bannerRouter, pageRouter } from './seo/routes';
+import { hospitalRouter } from './hospital/routes';
 import { errorMiddleware, middleware } from './utils';
 
 const app = express();
@@ -56,10 +57,11 @@ app.get('/health-check', (req: Request, res: Response, next: NextFunction): void
 app.use('/api/seo', seoRouter);
 app.use('/api/banners', bannerRouter);
 app.use('/api/pages', pageRouter);
+app.use('/api/hospitals', hospitalRouter);
 
 app.use(errorMiddleware);
 
-const port = process.env.APP_PORT || 8081;
+const port = process.env.APP_PORT || 8083;
 const NODE_ENV = process.env.NODE_ENV || 'dev';
 
 app.listen(port, () => {

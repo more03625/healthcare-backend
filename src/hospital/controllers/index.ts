@@ -1,2 +1,1 @@
-// Your controllers logic goes here
-console.log('controllers Initialized');
+export { default as hospitalController } from './hospital'

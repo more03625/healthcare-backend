@@ -10,6 +10,7 @@ const dbConnectionData = {
     port: Number(config.DB.PORT),
 }
 
+console.log('dbConnectionData ==>', dbConnectionData)
 const client = new Client(dbConnectionData);
 
 const connectDB = async () => {
