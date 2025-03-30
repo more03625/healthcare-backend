@@ -12,7 +12,6 @@ async function buildFilters(payload: any) {
             filters.push(`id = ${payload.id}`);
         }
     
-        throw 'Issus are there'
         return filters;
     } catch (error) {
         return response.internalServerError(error)
