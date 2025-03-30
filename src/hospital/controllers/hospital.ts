@@ -20,7 +20,29 @@ const addHospital = async (payload: Record<string, any>) => {
     }
 }
 
+export const updateHospital = async (payload: Record<string, any>) => {
+    try {
+
+        const updatedHospital = await hospitalService.updateHospital(Number(payload.id), payload);
+        return updatedHospital
+    } catch (error) {
+        return response.internalServerError(error);
+    }
+};
+
+export const deleteHospital = async (payload: Record<string, any>) => {
+    try {
+
+        const updatedHospital = await hospitalService.deleteHospital(Number(payload.id));
+        return updatedHospital
+    } catch (error) {
+        return response.internalServerError(error);
+    }
+};
+
 export default {
     get,
-    addHospital
+    addHospital,
+    updateHospital,
+    deleteHospital
 }

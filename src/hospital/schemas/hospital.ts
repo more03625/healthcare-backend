@@ -23,16 +23,25 @@ const addHospital = yup.object({
     })
 });
 
-const updateHospital = addHospital.concat(
-    yup.object({
-        body: yup.object({
-            id: yup.string().required().trim()
-        })
-    })
-)
+const updateHospital = yup.object({
+    body: yup.object({
+        name: yup.string().max(255),
+        email: yup.string().email().max(255),
+        phone: yup.string().max(20),
+        address: yup.string(),
+        city: yup.string().max(100),
+        state: yup.string().max(100),
+        country: yup.string().max(100),
+        pincode: yup.string().max(10),
+        admin_id: yup.number().integer(),
+    }),
+    params: yup.object({
+        id: yup.number().integer(),
+    }),
+});
 
 const deleteHospital = yup.object({
-    body: yup.object({
+    params: yup.object({
         id: yup.string().trim().required(),
     })
 });

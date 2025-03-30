@@ -12,6 +12,8 @@ async function buildFilters(payload: any) {
             filters.push(`id = ${payload.id}`);
         }
     
+        // default filters
+        filters.push(`is_deleted = false`);
         return filters;
     } catch (error) {
         return response.internalServerError(error)

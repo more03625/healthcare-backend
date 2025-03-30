@@ -13,6 +13,22 @@ const dbConnectionData = {
 console.log('dbConnectionData ==>', dbConnectionData)
 const client = new Client(dbConnectionData);
 
+const formatQuery = (query: string, params?: any[]) => {
+    if (!params || params.length === 0) return query;
+    return query.replace(/\$(\d+)/g, (_, index) => {
+        let value = params[Number(index) - 1];
+        if (typeof value === "string") return `'${value}'`; // Wrap strings in quotes
+        if (value === null) return "NULL";
+        return value;
+    });
+};
+
+const queryWithLogging = async (query: string, params?: any[]) => {
+    const rawQuery = formatQuery(query, params);
+    console.log("Raw SQL Query:", rawQuery);
+    return client.query(query, params);
+};
+
 const connectDB = async () => {
     try {
         await client.connect();
@@ -23,4 +39,4 @@ const connectDB = async () => {
     }
 };
 
-export { client, connectDB };
+export { client, queryWithLogging, connectDB };

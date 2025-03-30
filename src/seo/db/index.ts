@@ -1,1 +1,1 @@
-export { connectDB, client } from './connection'
+export { connectDB, client, queryWithLogging } from './connection'

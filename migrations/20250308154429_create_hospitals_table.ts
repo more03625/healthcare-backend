@@ -11,6 +11,7 @@ export async function up(knex: Knex): Promise<void> {
         table.string("state", 100).notNullable();
         table.string("country", 100).notNullable();
         table.string("pincode", 10).notNullable();
+        table.boolean("is_deleted").notNullable().defaultTo(false);
         table.integer("admin_id").notNullable(); // Hospital Admin (Owner)
         table.timestamp("created_at").defaultTo(knex.fn.now());
         table.timestamp("updated_at").defaultTo(knex.fn.now());
