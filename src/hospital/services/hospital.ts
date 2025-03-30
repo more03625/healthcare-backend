@@ -4,13 +4,18 @@ import { filters } from "../utils";
 import { HcTables } from '../../../hc-config'
 import { response } from "../../utils";
 
-const createHospital = async (name: string, location: string) => {
+const createHospital = async (payload: Record<string, any>) => {
+  const { name, email, phone, address, city, state, country, pincode, admin_id } = payload;
+
   const query = `
-    INSERT INTO hospitals (name, location)
-    VALUES (?, ?)
+    INSERT INTO hospitals (name, email, phone, address, city, state, country, pincode, admin_id)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
     RETURNING *;
   `;
-  const result = await client.query(query, [name, location]);
+
+  const values = [name, email, phone, address, city, state, country, pincode, admin_id];
+
+  const result = await client.query(query, values);
   return result.rows[0];
 };
 

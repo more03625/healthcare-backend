@@ -11,41 +11,15 @@ const getHospital = yup.object({
 
 const addHospital = yup.object({
     body: yup.object({
-        siteUrl: yup.string().matches(
-            /^(https:\/\/[\w.-]+)\/?$/i,
-            'Site URL must be in the format https://google.com (no trailing slash)'
-        ).trim().required(),
-        pageUrl: yup.string().url().trim().required(),
-        canonicalURL: yup.string().url().trim(),
-        robots: yup.string().trim(),
-        googleBot: yup.string().trim(),
-        isActive: yup.boolean().required(),
-        openGraph: yup.object({
-            type: yup.string().trim().required(),
-            url: yup.string().url().trim().required(),
-            title: yup.string().trim().required(),
-            description: yup.string().trim().required(),
-            keywords: yup.string().trim().required(),
-            image: yup.object({
-                url: yup.string().url().trim().required(),
-                alt: yup.string().trim().required(),
-                type: yup.string().trim().required(),
-                width: yup.string().trim().required(),
-                height: yup.string().trim().required(),
-            }),
-        }).required(),
-        twitter: yup.object({
-            card: yup.string().trim().required(),
-            title: yup.string().trim().required(),
-            description: yup.string().trim().required(),
-            image: yup.object({
-                url: yup.string().url().trim().required(),
-                alt: yup.string().trim().required(),
-                type: yup.string().trim().required(),
-                width: yup.string().trim().required(),
-                height: yup.string().trim().required(),
-            }),
-        }).required(),
+        name: yup.string().max(255).trim().required("Hospital name is required"),
+        email: yup.string().email("Invalid email format").max(255).trim().required("Email is required"),
+        phone: yup.string().max(20).trim().required("Phone number is required"),
+        address: yup.string().trim().required("Address is required"),
+        city: yup.string().max(100).trim().required("City is required"),
+        state: yup.string().max(100).trim().required("State is required"),
+        country: yup.string().max(100).trim().required("Country is required"),
+        pincode: yup.string().max(10).trim().required("Pincode is required"),
+        admin_id: yup.number().integer().required("Admin ID is required"), // Hospital Admin (Owner)
     })
 });
 

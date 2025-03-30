@@ -19,14 +19,19 @@ server.get('/', validate(hospitalSchema.getHospital), async (req: Request, res: 
     }
 });
 
-// server.post('/', validate(hospitalSchema.addHospital), async (req: Request, res: Response, next: NextFunction): Promise<Record<string, any> | void> => {
-//     try {
-//         const result = await seoController.addSeo(req);
-//         return response.send(result, res);
-//     } catch (err) {
-//         return next(err);
-//     }
-// });
+server.post('/', validate(hospitalSchema.addHospital), async (req: Request, res: Response, next: NextFunction): Promise<Record<string, any> | void> => {
+    try {
+        const payload = {
+            ...req.body,
+            ...req.params,
+            ...req.query,
+        }
+        const result = await hospitalController.addHospital(payload);
+        return response.send(result, res);
+    } catch (err) {
+        return next(err);
+    }
+});
 
 // server.put('/', validate(hospitalSchema.updateHospital), async (req: Request, res: Response, next: NextFunction): Promise<Record<string, any> | void> => {
 //     try {
