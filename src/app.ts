@@ -3,12 +3,21 @@ import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import semver from 'semver';
 import 'esm';
+import path from "path";
+import fs from "fs";
+
+// Swagger Config
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "./swagger-output.json"; // Import auto-generated Swagger JSON
 
 import packageJson from '../package.json';
 import { connectDB } from './seo/db';
 import { seoRouter, bannerRouter, pageRouter } from './seo/routes';
 import { hospitalRouter } from './hospital/routes';
 import { errorMiddleware, middleware } from './utils';
+import routes from "./routes"; // Import the route configuration
+
+
 
 const app = express();
 app.use(express.json());
@@ -33,6 +42,31 @@ const connectToDB = async () => {
 
 connectToDB();
 
+// Dynamically load and attach routes
+routes.forEach(async ({ prefix, folder }) => {
+    try {
+        const routePath = path.join(__dirname, folder, `routes/${folder}.ts`); // Adjust for TypeScript (.ts)
+
+        if (!fs.existsSync(routePath)) {
+            console.error(`❌ Route file not found: ${routePath}`);
+            return;
+        }
+
+        const module = await import(routePath); // Dynamically import routes
+
+        if (!module.default) {
+            console.error(`❌ No default export in ${routePath}`);
+            return;
+        }
+
+        app.use(prefix, module.default); // Attach routes
+        console.log(`✅ Mounted routes for ${prefix} from ${routePath}`);
+    } catch (err) {
+        console.error(`❌ Failed to load routes for ${prefix}:`, err);
+    }
+});
+
+
 app.get('/', (req: Request, res: Response, next: NextFunction): void => {
     console.log(req.ip);
     res.send({
@@ -54,6 +88,8 @@ app.get('/health-check', (req: Request, res: Response, next: NextFunction): void
     return next()
 });
 
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use('/api/seo', seoRouter);
 app.use('/api/banners', bannerRouter);
 app.use('/api/pages', pageRouter);
@@ -61,7 +97,7 @@ app.use('/api/hospitals', hospitalRouter);
 
 app.use(errorMiddleware);
 
-const port = process.env.APP_PORT || 8083;
+const port = process.env.APP_PORT || 8081;
 const NODE_ENV = process.env.NODE_ENV || 'dev';
 
 app.listen(port, () => {
