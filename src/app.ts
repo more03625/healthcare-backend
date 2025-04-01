@@ -53,7 +53,7 @@ routes.forEach(async ({ prefix, folder }) => {
         }
 
         const module = await import(routePath); // Dynamically import routes
-
+        console.log('module =>', module)
         if (!module.default) {
             console.error(`❌ No default export in ${routePath}`);
             return;

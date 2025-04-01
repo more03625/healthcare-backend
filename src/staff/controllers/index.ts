@@ -1,0 +1,1 @@
+export { default as staffController } from './staff'

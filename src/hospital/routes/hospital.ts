@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { response, validate } from '../../utils';
-import { hospitalSchema } from '../schemas'; // Import the yup schema you created
+import { hospitalSchema } from '../schemas';
 import { hospitalController } from '../controllers';
 
 const server = express.Router();

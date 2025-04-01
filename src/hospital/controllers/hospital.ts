@@ -10,7 +10,6 @@ const get = async (payload: Record<string, any>) => {
     }
 }
 
-
 const addHospital = async (payload: Record<string, any>) => {
     try {
         const result = await hospitalService.createHospital(payload);
@@ -20,9 +19,8 @@ const addHospital = async (payload: Record<string, any>) => {
     }
 }
 
-export const updateHospital = async (payload: Record<string, any>) => {
+const updateHospital = async (payload: Record<string, any>) => {
     try {
-
         const updatedHospital = await hospitalService.updateHospital(Number(payload.id), payload);
         return updatedHospital
     } catch (error) {
@@ -30,7 +28,7 @@ export const updateHospital = async (payload: Record<string, any>) => {
     }
 };
 
-export const deleteHospital = async (payload: Record<string, any>) => {
+const deleteHospital = async (payload: Record<string, any>) => {
     try {
 
         const updatedHospital = await hospitalService.deleteHospital(Number(payload.id));

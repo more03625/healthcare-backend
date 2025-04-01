@@ -1,5 +1,7 @@
 const hcTables = {
-    HOSPITALS: 'hospitals'
+    HOSPITALS: 'hospitals',
+    STAFF: 'staff',
+    HOSPITAL_STAFF: 'hospital_staff',
 }
 
 
